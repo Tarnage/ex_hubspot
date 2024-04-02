@@ -1,4 +1,4 @@
-defmodule ExHubspot.Application do
+defmodule Hubspot.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
@@ -14,7 +14,7 @@ defmodule ExHubspot.Application do
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: ExHubspot.Supervisor]
+    opts = [strategy: :one_for_one, name: Hubspot.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end

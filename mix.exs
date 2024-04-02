@@ -5,7 +5,7 @@ defmodule ExHubspot.MixProject do
     [
       app: :ex_hubspot,
       version: "0.1.0",
-      elixir: "~> 1.15",
+      elixir: "~> 1.16",
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
@@ -15,7 +15,7 @@ defmodule ExHubspot.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {ExHubspot.Application, []}
+      mod: {Hubspot.Application, []}
     ]
   end
 

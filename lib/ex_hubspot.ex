@@ -1,14 +1,15 @@
-defmodule ExHubspot do
+defmodule Hubspot do
   @moduledoc """
-  Documentation for `ExHubspot`.
+  Documentation for `Hubspot`.
   """
 
+  @spec hello() :: :world
   @doc """
   Hello world.
 
   ## Examples
 
-      iex> ExHubspot.hello()
+      iex> Hubspot.hello()
       :world
 
   """
