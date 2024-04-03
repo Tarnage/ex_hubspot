@@ -14,20 +14,11 @@ defmodule Hubspot.OauthRefreshWorkerTest do
   end
 
   test "starts the worker and initializes state", %{pid: pid} do
-    send(self(), :tick)
-    assert_receive :tick
     assert Process.alive?(pid)
   end
 
-  test "sends tick message after 5 seconds", %{pid: _pid} do
-    :timer.sleep(6000)
-    assert_receive :tick
-  end
-
-  test "handles tick message and continues ticking", %{pid: pid} do
-    assert_receive {:ok, _}
-    assert_receive {:ok, _}
-    assert_receive {:ok, _}
-    assert Process.alive?(pid)
+  test "get_client returns a client" do
+    client = OauthRefreshWorker.get_client()
+    assert %Req.Request{} = client
   end
 end

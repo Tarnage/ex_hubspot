@@ -25,19 +25,11 @@ defmodule Hubspot.OauthRefreshWorker do
     {:ok, state}
   end
 
-  # def handle_continue(:tick, state) do
-  #   Logger.debug("Handling tick")
-  #   tick()
-  #   {:noreply, state}
-  # end
+  def get_client() do
+    GenServer.call(__MODULE__, :get_client, 30_000)
+  end
 
-  # def handle_info(:tick, state) do
-  #   tick()
-  #   {:noreply, state}
-  # end
-
-  # def tick() do
-  #   # Process.send_after instructs OTP to schedule a message to be sent to the current process after a given delay.
-  #   Process.send_after(self(), :tick, 0)
-  # end
+  def handle_call(:get_client, _from, state) do
+    {:reply, state.client, state}
+  end
 end
