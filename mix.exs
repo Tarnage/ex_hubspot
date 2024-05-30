@@ -23,7 +23,8 @@ defmodule ExHubspot.MixProject do
   defp deps do
     [
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
-      {:req, "~> 0.4.5"}
+      {:req, "~> 0.4.5"},
+      {:credo, "~> 1.7"}
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
     ]

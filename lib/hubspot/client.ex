@@ -19,14 +19,7 @@ defmodule Hubspot.Client do
   - new_client/0
 
   ## Examples
-
-      iex> config = %{rest_url: "https://api.hubapi.com", hs_access_token: "YOUR_ACCESS_TOKEN", retry: true}
-      %{
-        retry: true,
-        rest_url: "https://api.hubapi.com",
-        hs_access_token: "YOUR_ACCESS_TOKEN"
-      }
-      iex> client = Hubspot.Client.new_client(config)
+      iex> client = Hubspot.Client.new_client()
       %Req.Request{
         method: :get,
         url: URI.parse(""),
@@ -39,31 +32,22 @@ defmodule Hubspot.Client do
         options: %{retry: true, base_url: "https://api.hubapi.com"},
         ...
   """
-  alias Hubspot.OauthRefreshWorker
-  defstruct [:rest_url, :hs_access_token, :retry]
+  @hubspot_base_url "https://api.hubapi.com"
 
-  @type client_config :: %__MODULE__{
-          rest_url: String.t(),
-          hs_access_token: String.t(),
-          retry: boolean()
-        }
+  @spec new_client() :: Req.Request.t()
+  def new_client() do
+    Req.new(base_url: @hubspot_base_url, retry: false)
+    |> add_required_headers()
+  end
 
-  @type t :: Req.Request.t()
-
-  @spec new_client(client_config) :: Req.Request.t()
-  def new_client(%{
-        rest_url: rest_url,
-        hs_access_token: hs_access_token,
-        retry: retry
-      }) do
-    Req.new(base_url: rest_url, retry: retry)
-    |> Req.Request.put_header("authorization", "Bearer #{hs_access_token}")
+  defp add_required_headers(client) do
+    client
+    |> Req.Request.put_header("authorization", "Bearer #{access_token()}")
     |> Req.Request.put_header("accept", "application/json")
     |> Req.Request.put_header("content-type", "application/json")
   end
 
-  def new_client do
-    {client, _state} = OauthRefreshWorker.get_client()
-    client
+  defp access_token do
+    Application.get_env(:tech_co, :hubspot)[:hs_access_token]
   end
 end
